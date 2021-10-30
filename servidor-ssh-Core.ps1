@@ -5,14 +5,10 @@ Get-WindowsCapability -name openssh.server* -online | Add-WindowsCapability –O
 Set-Service -Name sshd -StartupType 'Automatic'
 #Iniciamos el servicio
 Start-Service sshd
+#
 # Añadimos la regla al Firewall para permitr conexiones al puerto 22 si no está configurada
-if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyContinue | Select-Object Name, Enabled)) {
-    Write-Output "Firewall Rule 'OpenSSH-Server-In-TCP' no existe, la creamos.."
-    New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' -DisplayName 'Servidor OpenSSH (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
-} else {
-    Write-Output "La regla OpenSSH-Server-In-TCP' ya existe."
-}
-
+#
+New-NetFirewallRule -Name 'Servidor ssh TCP 22' -DisplayName 'Servidor OpenSSH (sshd)' -Enabled True -Direction Inbound -Action Allow -Protocol TCP -LocalPort 22
 
 
 Para conectarnos
