@@ -6,3 +6,5 @@
 repadmin /showrepl
 repadmin /ReplSummary
 dcdiag /test:replications
+
+repadmin /replsum * /bysrc /bydest /sort:delta
